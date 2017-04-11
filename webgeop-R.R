@@ -1,5 +1,5 @@
 # install.packages("nome") das bibliotecas antes
-library("rjson")
+library("jsonlite")
 library(dplyr)
 library(lubridate)
 library(ggplot2)
@@ -12,14 +12,14 @@ json_data <- fromJSON(json_file)
 #Substitui os acentos no arquivo json
 
 names(json_data)<- gsub(" ", "_", names(json_data))                      
-names(json_data) <- gsub("ã", "a", names(json_data))
-names(json_data) <- gsub("á", "a", names(json_data))
-names(json_data) <- gsub("ç", "c", names(json_data))
+names(json_data) <- gsub("Ã£", "a", names(json_data))
+names(json_data) <- gsub("Ã¡", "a", names(json_data))
+names(json_data) <- gsub("Ã§", "c", names(json_data))
 
 
 
 Tipo <- json_data %>%
-  filter(Sistematica %in% c("Não")) %>%    
+  filter(Sistematica %in% c("NÃ£o")) %>%    
   count(Tipo_de_Solicitacao) %>%
   arrange(desc(n)) %>%
   mutate(proporcao = 100 * n/sum(n))
@@ -43,7 +43,7 @@ g2 <- ggplot(Setor, aes(x = reorder(Setor, -n), y = proporcao)) +
   theme_economist()
 
 Serv <- json_data %>%
-  filter(Sistematica %in% c("Não")) %>%  
+  filter(Sistematica %in% c("NÃ£o")) %>%  
   count(Tipo_de_Servico) %>%
   arrange(desc(n)) %>%
   mutate(proporcao = 100 * n/sum(n))
